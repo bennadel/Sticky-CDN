@@ -1,0 +1,4 @@
+
+# I am here to make sure the logs directory gets committed. 
+*.log
+*.txt

@@ -1,0 +1,4 @@
+
+# I am here to make sure the cache directory gets committed. 
+*.binary
+*.json
