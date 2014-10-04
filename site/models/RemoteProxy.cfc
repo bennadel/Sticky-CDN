@@ -89,7 +89,27 @@ component
 
 			if ( structKeyExists( responseHeaders, headerName ) ) {
 
-				headers[ headerName ] = responseHeaders[ headerName ];
+				var value = responseHeaders[ headerName ];
+
+				// If the header is not a simple value, then ColdFusion has returned it as an
+				// array-like Struct. We need to collapse the struct down into a simple value
+				// that can be easily returned by the CDN.
+				if ( ! isSimpleValue( value ) ) {
+
+					var compoundHeaderValue = [];
+
+					// Loop over the index-like keys.
+					for ( var pseudoIndex in value ) {
+
+						arrayAppend( compoundHeaderValue, value[ pseudoIndex ] );
+
+					}
+
+					value = arrayToList( compoundHeaderValue, ", " );
+
+				}
+
+				headers[ headerName ] = value;
 
 			}
 			
